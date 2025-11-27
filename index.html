@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>ASCII Table</title>
+<title>Unicode Converter</title>
 <link rel="stylesheet" type="text/css" href="style.css">
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -12,7 +12,6 @@ body {
   padding: 0;
   background-color: #ffb347;
   font-family: 'Comic Neue', cursive;
-  text-align: center;
 }
 
 section {
@@ -20,52 +19,60 @@ section {
 }
 
 h2 {
-  font-size: 28px;
+  font-size: 32px;
   margin-bottom: 20px;
+  text-align: center;
 }
 
-/* Layout for image and input side by side */
-.ascii-container {
+p {
+  font-size: 20px;
+}
+
+/* Main container: images on left, input/output on right */
+.main-container {
   display: flex;
   justify-content: center;
-  align-items: center; /* center vertically */
-  gap: 40px;
-  margin-bottom: 20px;
+  align-items: flex-start;
+  gap: 30px;
+  margin-bottom: 30px;
 }
 
-/* Box around the image */
-.ascii-box {
+/* Images column */
+.images-column {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.image-row {
+  display: flex;
+  gap: 20px;
+}
+
+.image-box {
   background-color: white;
-  padding: 15px;
+  padding: 10px;
   border-radius: 12px;
   box-shadow: 0 4px 8px rgba(0,0,0,0.2);
 }
 
-.ascii-img {
-  width: 750px; /* slightly larger */
+.image-box img {
+  width: 600px;
   height: auto;
-  display: block;
   border-radius: 8px;
 }
 
-/* Input and button container */
-.input-box {
+/* Input/output column */
+.io-column {
   display: flex;
   flex-direction: column;
-  justify-content: center; /* center vertically with the image */
-  align-items: center;
-  gap: 20px;
-}
-
-/* Make the text above the input/button larger */
-.input-box p {
-  font-size: 22px; /* larger text */
-  margin: 5px 0;
+  justify-content: center;
+  gap: 15px;
 }
 
 input {
-  font-size: 20px; /* larger input text */
-  padding: 10px 20px; /* bigger input */
+  font-size: 22px;
+  padding: 10px 20px;
   border-radius: 6px;
 }
 
@@ -73,8 +80,8 @@ button {
   background-color: #008CBA;
   color: white;
   border: none;
-  padding: 12px 30px; /* larger button */
-  font-size: 18px; /* button text size */
+  padding: 14px 32px;
+  font-size: 18px;
   border-radius: 8px;
   cursor: pointer;
   transition: 0.2s;
@@ -85,12 +92,25 @@ button:hover {
   transform: scale(1.05);
 }
 
+/* Clean output display */
+#demo {
+  margin: 0;
+  font-size: 26px;
+  font-weight: bold;
+}
+
+/* Back link moved under input/button */
 .back-link {
   display: block;
-  margin: 25px 0 10px 0;
+  margin-top: 20px;
   font-weight: bold;
   text-decoration: none;
   color: #004d40;
+}
+
+footer {
+  padding: 5px 0;
+  text-align: center;
 }
 </style>
 </head>
@@ -98,40 +118,56 @@ button:hover {
 <body>
 
 <section>
-<h2>Project 4: ASCII</h2>
+<h2>Project 4: UNICODE</h2>
 
-<div class="ascii-container">
-  <!-- IMAGE BOX ON LEFT -->
-  <div class="ascii-box">
-    <img src="Images/ascii.png" class="ascii-img">
+<div class="main-container">
+
+  <!-- Left column: images -->
+  <div class="images-column">
+    <!-- Top row: two images side by side -->
+    <div class="image-row">
+      <div class="image-box">
+        <img src="Images/uni1.jpg">
+      </div>
+      <div class="image-box">
+        <img src="Images/uni3.jpg">
+      </div>
+    </div>
+    <!-- Bottom row: one image centered -->
+    <div class="image-row" style="justify-content: center;">
+      <div class="image-box">
+        <img src="Images/uni4.jpg">
+      </div>
+    </div>
   </div>
 
-  <!-- INPUT BOX ON RIGHT -->
-  <div class="input-box">
-    <p>Enter any number from 0 to 127:</p>
-    <input id="inputdec">
-    <button onclick="decToASCII()">Submit</button>
-    <p>ASCII Value:</p>
-    <p id="demo"></p>
+  <!-- Right column: input, button, output, back link -->
+  <div class="io-column">
+    <p>Please input UNICODE number:</p>
+    <input id="numb" type="text">
+    <button type="button" onclick="myFunction()">Submit</button>
+
+    <!-- Output display -->
+    <div id="demo"></div>
+
+    <!-- Back link under input/button -->
+    <a href="project.html" class="back-link">Back to Projects</a>
   </div>
+
 </div>
 
-<a href="project.html" class="back-link">Back to Projects</a>
-
-<footer style="margin-top:0; padding:5px 0;">
+<footer>
   <p>@ Powered by UB</p>
 </footer>
 
 <script>
-function decToASCII() {
-  const x = document.getElementById("inputdec").value;
-  const res = String.fromCharCode(x);
-  document.getElementById("demo").innerHTML = res;
-  console.log(res);
+function myFunction() {
+  const x = document.getElementById("numb").value;
+  const unicode = "&#x" + x;
+  document.getElementById("demo").innerHTML = unicode;
 }
 </script>
 
 </section>
-
 </body>
 </html>
